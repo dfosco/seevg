@@ -246,6 +246,7 @@ function App() {
 
   // Check if mobile modal should be shown
   useEffect(() => {
+    if (typeof window === 'undefined') return
     const isMobile = window.innerWidth < 640 // Tailwind sm breakpoint
     const dismissed = localStorage.getItem('seevg-mobile-modal-dismissed')
     if (isMobile && !dismissed) {
