@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@import "@fontsource/monaspace-neon/400.css";
+@import "@fontsource/monaspace-neon/500.css";
+@import "@fontsource/monaspace-neon/600.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: "Monaspace Neon", monospace;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Dotted grid backgrounds */
+.bg-grid-dark {
+  background-color: #1e293b;
+  background-image: radial-gradient(circle, #475569 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.bg-grid-light {
+  background-color: #f1f5f9;
+  background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+  background-size: 16px 16px;
+}
