@@ -230,6 +230,7 @@ function App() {
   const [lockedElement, setLockedElement] = useState(null)
   const [zoom, setZoom] = useState(100)
   const [darkBg, setDarkBg] = useState(true)
+  const [showMobileModal, setShowMobileModal] = useState(false)
   const editorRef = useRef(null)
   const editorViewRef = useRef(null)
   const svgContainerRef = useRef(null)
@@ -242,6 +243,21 @@ function App() {
   const zoomIn = () => setZoom(z => Math.min(z + 25, 300))
   const zoomOut = () => setZoom(z => Math.max(z - 25, 25))
   const resetZoom = () => setZoom(100)
+
+  // Check if mobile modal should be shown
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const isMobile = window.innerWidth < 640 // Tailwind sm breakpoint
+    const dismissed = localStorage.getItem('seevg-mobile-modal-dismissed')
+    if (isMobile && !dismissed) {
+      setShowMobileModal(true)
+    }
+  }, [])
+
+  const handleCloseMobileModal = () => {
+    setShowMobileModal(false)
+    localStorage.setItem('seevg-mobile-modal-dismissed', 'true')
+  }
 
   useEffect(() => {
     if (!editorRef.current || editorViewRef.current) return
@@ -649,6 +665,22 @@ function App() {
 
   return (
     <div className="h-screen w-screen flex flex-col bg-slate-950">
+      {/* Mobile Modal */}
+      {showMobileModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="bg-slate-900 rounded-lg shadow-xl max-w-sm w-full p-6 border border-slate-800">
+            <p className="text-slate-200 text-sm leading-relaxed mb-6">
+              This site is not really made for mobile. Feel free to try it out, but I suggest opening it on desktop later!
+            </p>
+            <button
+              onClick={handleCloseMobileModal}
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors"
+            >
+              OK cool
+            </button>
+          </div>
+        </div>
+      )}
       {/* Header */}
       <header className="bg-slate-900/80 backdrop-blur-sm border-b border-slate-800/50 px-8 py-5 flex items-center gap-4 h-16">
         <h1 className="text-white text-lg font-semibold tracking-tight">
